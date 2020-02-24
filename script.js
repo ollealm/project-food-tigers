@@ -2,7 +2,7 @@ const apiKey = "6bd2892ddab2e2361c20e0ea6bbd659c";
 const cityId = 282; //Las Vegas
 const cuisineId = 182; //Breakfast
 //https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&entity_type=city&cuisines=${cuisineId}
-let maindata = ""
+let maindata;
 
 fetch(
     `https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&cuisines=${cuisineId}`, {
@@ -19,17 +19,19 @@ fetch(
 
     maindata = apiData
 
+    console.log("maindata:", maindata);
+
     //json.restaurants.forEach(item => {
     //console.log(item.restaurant.name);
     //});
 
     apiData.restaurants.forEach(item => {
-      console.log(item.restaurant.name);
-      console.log(item.restaurant.user_rating.aggregate_rating);
-      console.log(item.restaurant.user_rating.rating_text);
-      console.log(item.restaurant.highlights[0]);
-      console.log(item.restaurant.average_cost_for_two);
-      console.log(item.restaurant.location.address);
+      // console.log(item.restaurant.name);
+      // console.log(item.restaurant.user_rating.aggregate_rating);
+      // console.log(item.restaurant.user_rating.rating_text);
+      // console.log(item.restaurant.highlights[0]);
+      // console.log(item.restaurant.average_cost_for_two);
+      // console.log(item.restaurant.location.address);
 
       //console.log(item.restaurant.photos[0].photo.thumb_url);
 
@@ -50,3 +52,28 @@ fetch(
       }. <img src="${item.restaurant.thumb}"/></p>`;
     });
   });
+
+
+const filterPrice = () => {
+  let priceRange = 0;
+
+  console.log("maindata in function ", maindata)
+
+  console.log("hej2 ", maindata.restaurants)
+
+  maindata.restaurants.forEach(item => {
+    // console.log(item.restaurant.average_cost_for_two);
+
+    const aveCost = item.restaurant.average_cost_for_two
+    console.log(aveCost)
+  })
+
+};
+
+document.getElementById('filterPriceButton').addEventListener('click', () => filterPrice())
+// document.getElementById('filterPriceButton').addEventListener('click', console.log(maindata))
+
+// if (maindata) {
+
+//   filterPrice(maindata);
+// }
