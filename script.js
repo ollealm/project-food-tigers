@@ -2,6 +2,7 @@ const apiKey = "6bd2892ddab2e2361c20e0ea6bbd659c";
 const cityId = 282; //Las Vegas
 const cuisineId = 182; //Breakfast
 //https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&entity_type=city&cuisines=${cuisineId}
+let maindata = ""
 
 fetch(
     `https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&cuisines=${cuisineId}`, {
@@ -13,14 +14,16 @@ fetch(
   .then(response => {
     return response.json();
   })
-  .then(json => {
-    console.log("API response:", json);
+  .then(apiData => {
+    console.log("API response:", apiData);
+
+    maindata = apiData
 
     //json.restaurants.forEach(item => {
     //console.log(item.restaurant.name);
     //});
 
-    json.restaurants.forEach(item => {
+    apiData.restaurants.forEach(item => {
       console.log(item.restaurant.name);
       console.log(item.restaurant.user_rating.aggregate_rating);
       console.log(item.restaurant.user_rating.rating_text);
