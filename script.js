@@ -4,6 +4,9 @@ const cuisineId = 182; //Breakfast
 //https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&entity_type=city&cuisines=${cuisineId}
 let maindata = ""
 
+
+
+
 fetch(
     `https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&cuisines=${cuisineId}`, {
       headers: {
@@ -19,19 +22,41 @@ fetch(
 
     maindata = apiData
 
-    //json.restaurants.forEach(item => {
-    //console.log(item.restaurant.name);
-    //});
+    // Create variable for restaurant array
+    const restaurants = maindata.restaurants
 
-    apiData.restaurants.forEach(item => {
-      console.log(item.restaurant.name);
+    // Create function for ascending list
+    const ascendingCost = () => {
+      restaurants.sort((a, b) => a.restaurant.average_cost_for_two - b.restaurant.average_cost_for_two)
+    }
+
+
+    // Create function for descending list
+    const descendingCost = () => {
+      restaurants.sort((a, b) => b.restaurant.average_cost_for_two - a.restaurant.average_cost_for_two)
+    }
+
+    const sortCost = (selected) => {
+      if (selected === "low") {
+        restaurants.sort((a, b) => a.restaurant.average_cost_for_two - b.restaurant.average_cost_for_two)
+        console.log('if low', restaurants)
+      } else if (selected === "high") {
+        restaurants.sort((a, b) => b.restaurant.average_cost_for_two - a.restaurant.average_cost_for_two)
+      }
+    }
+
+    document.getElementById('sortPrice').addEventListener("change", () => sortCost(sortPrice.value))
+
+
+    restaurants.forEach(item => {
+      /*console.log(item.restaurant.name);
       console.log(item.restaurant.user_rating.aggregate_rating);
       console.log(item.restaurant.user_rating.rating_text);
       console.log(item.restaurant.highlights[0]);
       console.log(item.restaurant.average_cost_for_two);
       console.log(item.restaurant.location.address);
 
-      //console.log(item.restaurant.photos[0].photo.thumb_url);
+      //console.log(item.restaurant.photos[0].photo.thumb_url);*/
 
       const container = document.getElementById("resContainer");
 
