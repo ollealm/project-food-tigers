@@ -65,11 +65,34 @@ const filterPrice = () => {
     // console.log(item.restaurant.average_cost_for_two);
 
     const aveCost = item.restaurant.average_cost_for_two
-    console.log(aveCost)
+
+    if (aveCost <= 10) {
+
+      // document.getElementById("resContainer")
+      console.log(`billigt ${aveCost} ${item.restaurant.name}`)
+      console.log("Namn", item.restaurant.name)
+
+    } else if (aveCost <= 20) {
+      console.log("mellan", aveCost)
+
+      //add mid-price class
+    } else if (aveCost > 20) {
+      console.log("skitdyrt", aveCost)
+
+      //add high-price class
+    } else {
+      //wops try again
+    }
+
+    //
+
+
+
+
+
   })
 
 };
-
 document.getElementById('filterPriceButton').addEventListener('click', () => filterPrice())
 // document.getElementById('filterPriceButton').addEventListener('click', console.log(maindata))
 
