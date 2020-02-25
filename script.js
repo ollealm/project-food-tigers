@@ -17,25 +17,11 @@ fetch(
   .then(apiData => {
     console.log("API response:", apiData);
 
-    maindata = apiData
+    maindata = apiData // sends array to global value maindata
 
-    console.log("maindata:", maindata);
-
-    //json.restaurants.forEach(item => {
-    //console.log(item.restaurant.name);
-    //});
+    const container = document.getElementById("resContainer");
 
     apiData.restaurants.forEach(item => {
-      // console.log(item.restaurant.name);
-      // console.log(item.restaurant.user_rating.aggregate_rating);
-      // console.log(item.restaurant.user_rating.rating_text);
-      // console.log(item.restaurant.highlights[0]);
-      // console.log(item.restaurant.average_cost_for_two);
-      // console.log(item.restaurant.location.address);
-
-      //console.log(item.restaurant.photos[0].photo.thumb_url);
-
-      const container = document.getElementById("resContainer");
 
       container.innerHTML += `<p><span class="resLabel">Restaurant:</span> ${
         item.restaurant.name
@@ -51,6 +37,7 @@ fetch(
         item.restaurant.location.address
       }. <img src="${item.restaurant.thumb}"/></p>`;
     });
+
   });
 
 
@@ -122,19 +109,11 @@ document.getElementById('priceDropdown').addEventListener('change', () => filter
 
 const printRestaurants = (array) => {
 
-  console.log("Printed list: ", array);
-  console.log("Printed restaurant: ", array[0].restaurant);
-  console.log("Printed name: ", array[0].restaurant.name);
-
   const container = document.getElementById("resContainer");
 
-  container.innerHTML = ""
+  container.innerHTML = "" // resets html
 
   array.forEach(item => {
-
-
-    console.log("Printed name: ", item.restaurant.name);
-
 
     container.innerHTML += `<p><span class="resLabel">Restaurant:</span> ${
       item.restaurant.name
