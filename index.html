@@ -5,42 +5,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Breakfast in Las Vegas</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<header></header>
 
 <body>
+  <header>
+    <h1>Breakfast in <span>Las Vegas</span></h1>
 
-  <section id="selection">
+    <section id="selection" class="selection-container">
 
-    <div id="filterPrice">
-      <label>
-        Välj prisintervall:
+      <div id="filterPrice">
         <select id="priceDropdown">
-          <option value="cheap">Billigt</option>
-          <option value="mid">Mellan</option>
-          <option value="expen">Skitdyrt</option>
+          <option value="">Filter by price</option>
+          <option value="cheap">Low price</option>
+          <option value="mid">Mid price</option>
+          <option value="expen">High price</option>
         </select>
-      </label>
-    </div>
+      </div>
 
-    <div id="sortPriceContainer">
-      <select id="sortPrice">
-        <option value="" disabled selected>Sort by price</option>
-        <option value="low">Low to high</option>
-        <option value="high">High to low</option>
-      </select>
-    </div>
+      <div id="sortPriceContainer">
+        <select id="sortPrice">
+          <option value="" disabled selected>Sort by price</option>
+          <option value="low">Low to high</option>
+          <option value="high">High to low</option>
+        </select>
+      </div>
 
-    <div id="filterDelivery">
-      <select id="deliveryDropdown">
-        <option value="">Choose delivery option</option>
-        <option value="Homedelivery">Home delivery</option>
-        <option value="Online-booking">Online table booking</option>
-      </select>
-    </div>
+      <div id="filterDelivery">
+        <select id="deliveryDropdown">
+          <option value="">Choose delivery option</option>
+          <option value="Homedelivery">Home delivery</option>
+          <option value="Online-booking">Online table booking</option>
+        </select>
+      </div>
+
+  </header>
+
+
+  <section id="resContainer" class="card-container">
 
   </section>
-  <section id="resContainer"></section>
   <script src="script.js"></script>
 </body>
 
