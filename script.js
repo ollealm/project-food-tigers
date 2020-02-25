@@ -1,6 +1,6 @@
-const apiKey = "6bd2892ddab2e2361c20e0ea6bbd659c";
+const apiKey = "2fa0e45438e18d9c3ca8b7582953c2bb";
 const cityId = 282; //Las Vegas
-const cuisineId = 182; //Breakfast
+const cuisineId = 25; //Breakfast
 //https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&entity_type=city&cuisines=${cuisineId}
 
 let maindata = ""
@@ -65,17 +65,17 @@ const filterPrice = () => {
 
     const aveCost = item.restaurant.average_cost_for_two
 
-    if (aveCost <= 10) {
+    if (aveCost <= 50) {
       filteredCheap.push(item)
       // document.getElementById("resContainer")
       // console.log(`billigt ${aveCost} ${item.restaurant.name}`)
 
-    } else if (aveCost <= 20) {
+    } else if (aveCost <= 200) {
       // console.log("mellan", aveCost)
       filteredMid.push(item)
 
       //add mid-price class
-    } else if (aveCost > 20) {
+    } else if (aveCost > 200) {
       // console.log("skitdyrt", aveCost)
       filteredExpen.push(item)
 
@@ -168,26 +168,37 @@ revealFilter = (value) => {
 
   if (value === "Homedelivery") {
     filterDelivery(maindata);
+
   } else if (value === "Online-booking") {
     filterTableBooking(maindata);
+
   };
 
 };
 
 const filterDelivery = (maindata) => {
-  let hasHomeDelivery = {};
-  hasHomeDelivery = maindata.restaurants.filter(resto => resto.restaurant.has_online_delivery !== "0");
-  console.log(hasHomeDelivery);
+  let hasHomeDelivery = [];
 
+  maindata.restaurants.forEach(item => {
+    if (item.restaurant.has_online_delivery !== 0) {
+      hasHomeDelivery.push(item)
+    }
+  })
   printRestaurants(hasHomeDelivery)
+  // return hasHomeDelivery
 
 };
 
+
 const filterTableBooking = (maindata) => {
-  let hasTableBooking = {};
-  hasTableBooking = maindata.restaurants.filter(resto => resto.restaurant.has_table_booking !== "0");
-  console.log(hasTableBooking);
+  let hasTableBooking = [];
 
+  maindata.restaurants.forEach(item => {
+    if (item.restaurant.has_table_booking !== 0) {
+      hasTableBooking.push(item)
+    }
+
+  })
   printRestaurants(hasTableBooking)
-
-}
+  // return hasTableBooking
+};
