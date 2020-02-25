@@ -2,9 +2,8 @@ const apiKey = "6bd2892ddab2e2361c20e0ea6bbd659c";
 const cityId = 282; //Las Vegas
 const cuisineId = 182; //Breakfast
 //https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&entity_type=city&cuisines=${cuisineId}
-let maindata;
 
-
+let maindata = ""
 
 
 fetch(
@@ -14,9 +13,11 @@ fetch(
       }
     }
   )
+
   .then(response => {
     return response.json();
   })
+
   .then(apiData => {
     console.log("API response:", apiData);
 
@@ -26,22 +27,25 @@ fetch(
 
 
 
+
     apiData.restaurants.forEach(item => {
 
-      container.innerHTML += `<p><span class="resLabel">Restaurant:</span> ${
-        item.restaurant.name
-        }. <br/><span class="resLabel">Rating:</span> ${
-        item.restaurant.user_rating.aggregate_rating
-        }. ${
-        item.restaurant.user_rating.rating_text
-        }. <br/><span class="resLabel">Info:</span> ${
-        item.restaurant.highlights[0]
-        }. <br/><span class="resLabel">Snittkostnad (2 pers):</span> ${
+      container.innerHTML += `
+        <article class="container-restaurant">
+        <div class="image">
+        <img src="${item.restaurant.thumb}"/></div>
+        <div class="text"><h3> ${item.restaurant.name} </h3>
+        <p> <br/><span class="resLabel">Rating:</span> ${
+        item.restaurant.user_rating.aggregate_rating} ${
+        item.restaurant.user_rating.rating_text}
+        <br/><span class="resLabel">Average cost (2 pers):</span> ${
         item.restaurant.average_cost_for_two
-        }.<br/><span class="resLabel">Address:</span> ${
+        }<br/><span class="resLabel">Address:</span> ${
         item.restaurant.location.address
-        }. <img src="${item.restaurant.thumb}"/></p>`;
-    });
+        } </p></div>
+        </article>`
+
+    })
 
   });
 
@@ -50,7 +54,6 @@ fetch(
 //// FILTER PRICE FUNCTION
 
 const filterPrice = () => {
-  let priceRange = 0;
 
   let filteredRestaurants = [];
   let filteredCheap = [];
@@ -129,24 +132,62 @@ document.getElementById('sortPrice').addEventListener("change", () => sortCost(s
 
 const printRestaurants = (array) => {
 
-  const container = document.getElementById("resContainer");
-
   container.innerHTML = "" // resets html
 
   array.forEach(item => {
 
-    container.innerHTML += `<p><span class="resLabel">Restaurant:</span> ${
-      item.restaurant.name
-    }. <br/><span class="resLabel">Rating:</span> ${
-      item.restaurant.user_rating.aggregate_rating
-    }. ${
-      item.restaurant.user_rating.rating_text
-    }. <br/><span class="resLabel">Info:</span> ${
-      item.restaurant.highlights[0]
-    }. <br/><span class="resLabel">Snittkostnad (2 pers):</span> ${
-      item.restaurant.average_cost_for_two
-    }.<br/><span class="resLabel">Address:</span> ${
-      item.restaurant.location.address
-    }. <img src="${item.restaurant.thumb}"/></p>`;
+    container.innerHTML += `
+    <article class="container-restaurant">
+    <div class="image">
+    <img src="${item.restaurant.thumb}"/></div>
+    <div class="text"><h3> ${item.restaurant.name} </h3>
+    <p> <br/><span class="resLabel">Rating:</span> ${
+    item.restaurant.user_rating.aggregate_rating} ${
+    item.restaurant.user_rating.rating_text}
+    <br/><span class="resLabel">Average cost (2 pers):</span> ${
+    item.restaurant.average_cost_for_two
+    }<br/><span class="resLabel">Address:</span> ${
+    item.restaurant.location.address
+    } </p></div>
+    </article>`
+
   });
+}
+
+
+
+const container = document.getElementById("resContainer");
+
+
+
+//// DELIVERY FUNCTION
+
+document.getElementById("deliveryDropdown").addEventListener("change", () => revealFilter(deliveryDropdown.value));
+
+revealFilter = (value) => {
+
+  if (value === "Homedelivery") {
+    filterDelivery(maindata);
+  } else if (value === "Online-booking") {
+    filterTableBooking(maindata);
+  };
+
+};
+
+const filterDelivery = (maindata) => {
+  let hasHomeDelivery = {};
+  hasHomeDelivery = maindata.restaurants.filter(resto => resto.restaurant.has_online_delivery !== "0");
+  console.log(hasHomeDelivery);
+
+  printRestaurants(hasHomeDelivery)
+
+};
+
+const filterTableBooking = (maindata) => {
+  let hasTableBooking = {};
+  hasTableBooking = maindata.restaurants.filter(resto => resto.restaurant.has_table_booking !== "0");
+  console.log(hasTableBooking);
+
+  printRestaurants(hasTableBooking)
+
 }

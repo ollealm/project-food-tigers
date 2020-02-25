@@ -9,7 +9,9 @@
 <header></header>
 
 <body>
+
   <section id="selection">
+
     <div id="filterPrice">
       <label>
         Välj prisintervall:
@@ -20,6 +22,7 @@
         </select>
       </label>
     </div>
+
     <div id="sortPriceContainer">
       <select id="sortPrice">
         <option value="" disabled selected>Sort by price</option>
@@ -27,7 +30,15 @@
         <option value="high">High to low</option>
       </select>
     </div>
-    <div id="filterDelivery"></div>
+
+    <div id="filterDelivery">
+      <select id="deliveryDropdown">
+        <option value="">Choose delivery option</option>
+        <option value="Homedelivery">Home delivery</option>
+        <option value="Online-booking">Online table booking</option>
+      </select>
+    </div>
+
   </section>
   <section id="resContainer"></section>
   <script src="script.js"></script>
