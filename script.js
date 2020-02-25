@@ -98,36 +98,57 @@ const filterPrice = () => {
 
   if (priceDropdown.value === "cheap") {
     console.log("cheap", filteredCheap)
+
+    printRestaurants(filteredCheap)
+
   } else if (priceDropdown.value === "mid") {
     console.log("mid", filteredMid)
+
+    printRestaurants(filteredMid)
+
   } else {
     console.log("exp", filteredExpen)
+
+    printRestaurants(filteredExpen)
+
   }
 
 };
+
 document.getElementById('priceDropdown').addEventListener('change', () => filterPrice())
-// document.getElementById('filterPriceButton').addEventListener('click', console.log(maindata))
 
-// if (maindata) {
 
-//   filterPrice(maindata);
-// }
 
-/*document.getElementById("deliveryDropdown").addEventListener("change", () => filterDelivery());
-const filterDelivery = () => {
-  const hasHomeDelivery = maindata.restaurants.filter(resto => resto.restaurant.has_online_delivery !== "0");
-  console.log(hasHomeDelivery);
-  return hasHomeDelivery;
-};
-const container = document.getElementById("resContainer");
-filterDelivery.forEach((restaurant) => {
-  console.log(restaurant)
-  container.innerHTML = "";
-  container.innerHTML +=
-    `<p><span class="resLabel">Restaurant:</span>
-        ${restaurant.name}. <br/><span class="resLabel">Rating:</span> ${restaurant.user_rating.aggregate_rating}.
-         ${restaurant.user_rating.rating_text}. <br/><span class="resLabel">Info:</span>
-         ${restaurant.highlights[0]}. <br/><span class="resLabel">Snittkostnad (2 pers):</span>
-         ${restaurant.average_cost_for_two}.<br/><span class="resLabel">Address:</span>
-         ${restaurant.location.address}. <img src="${restaurant.thumb}"/></p>`;
-});*/
+
+const printRestaurants = (array) => {
+
+  console.log("Printed list: ", array);
+  console.log("Printed restaurant: ", array[0].restaurant);
+  console.log("Printed name: ", array[0].restaurant.name);
+
+  const container = document.getElementById("resContainer");
+
+  container.innerHTML = ""
+
+  array.forEach(item => {
+
+
+    console.log("Printed name: ", item.restaurant.name);
+
+
+    container.innerHTML += `<p><span class="resLabel">Restaurant:</span> ${
+      item.restaurant.name
+    }. <br/><span class="resLabel">Rating:</span> ${
+      item.restaurant.user_rating.aggregate_rating
+    }. ${
+      item.restaurant.user_rating.rating_text
+    }. <br/><span class="resLabel">Info:</span> ${
+      item.restaurant.highlights[0]
+    }. <br/><span class="resLabel">Snittkostnad (2 pers):</span> ${
+      item.restaurant.average_cost_for_two
+    }.<br/><span class="resLabel">Address:</span> ${
+      item.restaurant.location.address
+    }. <img src="${item.restaurant.thumb}"/></p>`;
+  });
+
+}
