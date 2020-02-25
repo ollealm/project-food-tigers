@@ -10,7 +10,6 @@
 
 <body>
   <section id="selection">
-    <div id="sortPrice"></div>
     <div id="filterPrice">
       <label>
         Välj prisintervall:
@@ -20,6 +19,13 @@
           <option value="expen">Skitdyrt</option>
         </select>
       </label>
+    </div>
+    <div id="sortPriceContainer">
+      <select id="sortPrice">
+        <option value="" disabled selected>Sort by price</option>
+        <option value="low">Low to high</option>
+        <option value="high">High to low</option>
+      </select>
     </div>
     <div id="filterDelivery"></div>
   </section>

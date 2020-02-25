@@ -4,6 +4,9 @@ const cuisineId = 182; //Breakfast
 //https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&entity_type=city&cuisines=${cuisineId}
 let maindata;
 
+
+
+
 fetch(
     `https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&cuisines=${cuisineId}`, {
       headers: {
@@ -21,25 +24,30 @@ fetch(
 
     const container = document.getElementById("resContainer");
 
+
+
     apiData.restaurants.forEach(item => {
 
       container.innerHTML += `<p><span class="resLabel">Restaurant:</span> ${
         item.restaurant.name
-      }. <br/><span class="resLabel">Rating:</span> ${
+        }. <br/><span class="resLabel">Rating:</span> ${
         item.restaurant.user_rating.aggregate_rating
-      }. ${
+        }. ${
         item.restaurant.user_rating.rating_text
-      }. <br/><span class="resLabel">Info:</span> ${
+        }. <br/><span class="resLabel">Info:</span> ${
         item.restaurant.highlights[0]
-      }. <br/><span class="resLabel">Snittkostnad (2 pers):</span> ${
+        }. <br/><span class="resLabel">Snittkostnad (2 pers):</span> ${
         item.restaurant.average_cost_for_two
-      }.<br/><span class="resLabel">Address:</span> ${
+        }.<br/><span class="resLabel">Address:</span> ${
         item.restaurant.location.address
-      }. <img src="${item.restaurant.thumb}"/></p>`;
+        }. <img src="${item.restaurant.thumb}"/></p>`;
     });
 
   });
 
+
+
+//// FILTER PRICE FUNCTION
 
 const filterPrice = () => {
   let priceRange = 0;
@@ -75,12 +83,6 @@ const filterPrice = () => {
 
     }
 
-    //
-
-
-
-
-
   })
 
   if (priceDropdown.value === "cheap") {
@@ -97,15 +99,33 @@ const filterPrice = () => {
     console.log("exp", filteredExpen)
 
     printRestaurants(filteredExpen)
-
   }
-
 };
 
 document.getElementById('priceDropdown').addEventListener('change', () => filterPrice())
 
 
 
+/// SORT FUNCTION
+
+const sortCost = (selected) => {
+  const restaurants = maindata.restaurants
+  if (selected === "low") {
+    const lowFirst = restaurants.sort((a, b) => a.restaurant.average_cost_for_two - b.restaurant.average_cost_for_two)
+    printRestaurants(lowFirst)
+
+  } else if (selected === "high") {
+    const highFirst = restaurants.sort((a, b) => b.restaurant.average_cost_for_two - a.restaurant.average_cost_for_two)
+    printRestaurants(highFirst)
+  }
+}
+
+document.getElementById('sortPrice').addEventListener("change", () => sortCost(sortPrice.value))
+
+
+
+
+/// PRINT PRICE FUNCTION
 
 const printRestaurants = (array) => {
 
@@ -129,5 +149,4 @@ const printRestaurants = (array) => {
       item.restaurant.location.address
     }. <img src="${item.restaurant.thumb}"/></p>`;
   });
-
 }
