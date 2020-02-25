@@ -5,12 +5,12 @@ const cuisineId = 182; //Breakfast
 let maindata = ""
 
 fetch(
-    `https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&cuisines=${cuisineId}`, {
-      headers: {
-        "user-key": apiKey
-      }
-    }
-  )
+  `https://developers.zomato.com/api/v2.1/search?entity_id=${cityId}&cuisines=${cuisineId}`, {
+  headers: {
+    "user-key": apiKey
+  }
+}
+)
   .then(response => {
     return response.json();
   })
@@ -24,29 +24,22 @@ fetch(
     //});
 
     apiData.restaurants.forEach(item => {
-      console.log(item.restaurant.name);
-      console.log(item.restaurant.user_rating.aggregate_rating);
-      console.log(item.restaurant.user_rating.rating_text);
-      console.log(item.restaurant.highlights[0]);
-      console.log(item.restaurant.average_cost_for_two);
-      console.log(item.restaurant.location.address);
 
-      //console.log(item.restaurant.photos[0].photo.thumb_url);
+      const resContainer = document.getElementById("resContainer")
 
-      const container = document.getElementById("resContainer");
-
-      container.innerHTML += `<p><span class="resLabel">Restaurant:</span> ${
-        item.restaurant.name
-      }. <br/><span class="resLabel">Rating:</span> ${
-        item.restaurant.user_rating.aggregate_rating
-      }. ${
-        item.restaurant.user_rating.rating_text
-      }. <br/><span class="resLabel">Info:</span> ${
-        item.restaurant.highlights[0]
-      }. <br/><span class="resLabel">Snittkostnad (2 pers):</span> ${
+      resContainer.innerHTML += `
+        <article class="container-restaurant">
+        <div class="image">
+        <img src="${item.restaurant.thumb}"/></div>
+        <div class="text"><h3> ${item.restaurant.name} </h3>
+        <p> <br/><span class="resLabel">Rating:</span> ${
+        item.restaurant.user_rating.aggregate_rating} ${
+        item.restaurant.user_rating.rating_text}
+        <br/><span class="resLabel">Average cost (2 pers):</span> ${
         item.restaurant.average_cost_for_two
-      }.<br/><span class="resLabel">Address:</span> ${
+        }<br/><span class="resLabel">Address:</span> ${
         item.restaurant.location.address
-      }. <img src="${item.restaurant.thumb}"/></p>`;
+        } </p></div>
+        </article>`
     });
   });
