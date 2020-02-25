@@ -57,9 +57,10 @@ fetch(
 const filterPrice = () => {
   let priceRange = 0;
 
-  console.log("maindata in function ", maindata)
-
-  console.log("hej2 ", maindata.restaurants)
+  let filteredRestaurants = [];
+  let filteredCheap = [];
+  let filteredMid = [];
+  let filteredExpen = [];
 
   maindata.restaurants.forEach(item => {
     // console.log(item.restaurant.average_cost_for_two);
@@ -67,21 +68,24 @@ const filterPrice = () => {
     const aveCost = item.restaurant.average_cost_for_two
 
     if (aveCost <= 10) {
-
+      filteredCheap.push(item)
       // document.getElementById("resContainer")
-      console.log(`billigt ${aveCost} ${item.restaurant.name}`)
-      console.log("Namn", item.restaurant.name)
+      // console.log(`billigt ${aveCost} ${item.restaurant.name}`)
 
     } else if (aveCost <= 20) {
-      console.log("mellan", aveCost)
+      // console.log("mellan", aveCost)
+      filteredMid.push(item)
 
       //add mid-price class
     } else if (aveCost > 20) {
-      console.log("skitdyrt", aveCost)
+      // console.log("skitdyrt", aveCost)
+      filteredExpen.push(item)
 
       //add high-price class
     } else {
       //wops try again
+      filteredRestaurants.push(item)
+
     }
 
     //
@@ -92,11 +96,38 @@ const filterPrice = () => {
 
   })
 
+  if (priceDropdown.value === "cheap") {
+    console.log("cheap", filteredCheap)
+  } else if (priceDropdown.value === "mid") {
+    console.log("mid", filteredMid)
+  } else {
+    console.log("exp", filteredExpen)
+  }
+
 };
-document.getElementById('filterPriceButton').addEventListener('click', () => filterPrice())
+document.getElementById('priceDropdown').addEventListener('change', () => filterPrice())
 // document.getElementById('filterPriceButton').addEventListener('click', console.log(maindata))
 
 // if (maindata) {
 
 //   filterPrice(maindata);
 // }
+
+/*document.getElementById("deliveryDropdown").addEventListener("change", () => filterDelivery());
+const filterDelivery = () => {
+  const hasHomeDelivery = maindata.restaurants.filter(resto => resto.restaurant.has_online_delivery !== "0");
+  console.log(hasHomeDelivery);
+  return hasHomeDelivery;
+};
+const container = document.getElementById("resContainer");
+filterDelivery.forEach((restaurant) => {
+  console.log(restaurant)
+  container.innerHTML = "";
+  container.innerHTML +=
+    `<p><span class="resLabel">Restaurant:</span>
+        ${restaurant.name}. <br/><span class="resLabel">Rating:</span> ${restaurant.user_rating.aggregate_rating}.
+         ${restaurant.user_rating.rating_text}. <br/><span class="resLabel">Info:</span>
+         ${restaurant.highlights[0]}. <br/><span class="resLabel">Snittkostnad (2 pers):</span>
+         ${restaurant.average_cost_for_two}.<br/><span class="resLabel">Address:</span>
+         ${restaurant.location.address}. <img src="${restaurant.thumb}"/></p>`;
+});*/
